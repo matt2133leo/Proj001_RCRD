@@ -1,55 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
 
 public class GameManager : MonoBehaviour
 {
+    [Header("UIManager")]
+    public UIManager UImanager;
 
-    [Header("對話視窗")]
-    public GameObject DialogueUI;
+    [Header("玩家的狀態")]
+    public bool Player_status = true;
 
-    [Header("對話判定")]
-    public bool player_dialogue = false;
-
-    [Header("NPC資料")]
-    public BaseNPC NPCdata;
-
-    [Header("Player資料")]
-    public BasePlayerManager playerdata;
+    private void Awake()
+    {
+        Player_status = true;
+    }
 
     private void Start()
     {
-        NPCdata = GameObject.FindWithTag("NPC").GetComponent<BaseNPC>();
-        playerdata = GameObject.FindWithTag("主角").GetComponent<BasePlayerManager>();
-        DialogueUI = GameObject.FindWithTag("UI");
-        DialogueUI.SetActive(false);
-
+        UImanager = FindObjectOfType<UIManager>();
     }
 
     private void Update()
     {
-        if (NPCdata.NPCdialogue == true) dialogue();
+        DetectUI();
     }
 
-    /// <summary>
-    /// 角色對話
-    /// </summary>
-    public void dialogue()
+    public void DetectUI()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && player_dialogue == false)
+        if(UImanager.Dia_status == false)
         {
-            player_dialogue = true;
-            DialogueUI.SetActive(player_dialogue);
-            playerdata.move_ani_bool = false;
-           // playerdata.GetComponent<BasePlayerManager>().enabled = false;
+            Player_status = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Space) && player_dialogue == true)
+        else
         {
-            player_dialogue = false;
-            DialogueUI.SetActive(player_dialogue);
-            playerdata.move_ani_bool = true;
-           // playerdata.GetComponent<BasePlayerManager>().enabled = true;
+            Player_status = false;
         }
-
     }
+
 }
