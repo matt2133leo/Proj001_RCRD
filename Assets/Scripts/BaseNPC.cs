@@ -42,7 +42,7 @@ public class BaseNPC : MonoBehaviour
     {
         float NPC_Player_Distance = Vector2.Distance(transform.position, player.transform.position);
 
-        if (NPC_Player_Distance <= 0.5) 
+        if (NPC_Player_Distance <= 0.35) 
         {
             Playerisclose = true;
             Vector2 NPPos = transform.position - player.transform.position;

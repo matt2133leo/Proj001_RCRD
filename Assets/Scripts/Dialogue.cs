@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Dialogue : MonoBehaviour
@@ -11,7 +12,7 @@ public class Dialogue : MonoBehaviour
     public GameObject DialogueUI;
 
     [Header("NPC資料")]
-    public BaseNPC NPCdata;
+    public List<BaseNPC> NPCdata;
 
     [Header("Player資料")]
     public BasePlayerManager playerdata;
@@ -19,7 +20,7 @@ public class Dialogue : MonoBehaviour
     private void Start()
     {
         UIcontroller = FindObjectOfType<UIManager>();
-        NPCdata = GameObject.FindWithTag("NPC").GetComponent<BaseNPC>();
+        NPCdata = FindObjectsOfType<BaseNPC>().ToList();
         playerdata = GameObject.FindWithTag("主角").GetComponent<BasePlayerManager>();
         DialogueUI = GameObject.FindWithTag("UI").transform.Find("對話視窗").gameObject;
         DialogueUI.SetActive(UIcontroller.Dia_status);
@@ -27,7 +28,11 @@ public class Dialogue : MonoBehaviour
 
     private void Update()
     {
-        if (NPCdata.Playerisclose == true) dialogue();
+        for (int i = 0; i < NPCdata.Count; i++)
+        {
+            if (i == BasePlayerManager.NPC_ID && NPCdata[i].Playerisclose == true) dialogue();
+        }
+
     }
 
     /// <summary>
