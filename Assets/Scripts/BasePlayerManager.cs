@@ -12,7 +12,7 @@ public class BasePlayerManager : MonoBehaviour
     public int NPC_num;
     public float NP_Distance;
     public List<float> save_distance;
-    public static int NPC_ID;
+    [SerializeField] public static int NPC_ID;
 
     [Header("走路速度")]
     public float move_speed = 200f;
@@ -23,20 +23,23 @@ public class BasePlayerManager : MonoBehaviour
     public Animator player_Anime;
     public Vector3 player_position;
 
+
+
+
     private void Start()
     {
         NPC_Script = GameObject.FindGameObjectsWithTag("NPC").ToList();
         gamemanager = FindObjectOfType<GameManager>();
         player_rig2D = GetComponent<Rigidbody2D>();
         player_Anime = GetComponent<Animator>();
-
+        
     }
 
     private void Update()
     {
         move();  //角色移動方法
         anime(); //角色動畫
-       NPC_ID_Detect(); //NPCID與距離偵測
+        NPC_ID_Detect(); //NPCID偵測
     }
 
     /// <summary>
@@ -89,9 +92,9 @@ public class BasePlayerManager : MonoBehaviour
 
 
     /// <summary>
-    /// NPC距離偵測
+    /// 角色偵測
     /// </summary>
-    /// <returns>NPC_ID</returns>
+    /// <returns>角色ID</returns>
     public int NPC_ID_Detect()
     {
         save_distance.Clear();
