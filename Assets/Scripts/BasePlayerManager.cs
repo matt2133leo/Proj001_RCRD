@@ -22,8 +22,8 @@ public class BasePlayerManager : MonoBehaviour
     public Rigidbody2D player_rig2D;
     public Animator player_Anime;
     public Vector3 player_position;
-
-
+    
+    
 
 
     private void Start()
@@ -107,7 +107,7 @@ public class BasePlayerManager : MonoBehaviour
                     NP_Distance = save_distance[i];
                     NPC_ID = i;
             }
-
+           
         }
         return NPC_ID;
     }

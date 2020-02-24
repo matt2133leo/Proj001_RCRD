@@ -1,5 +1,6 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
 
 public class BaseNPC : MonoBehaviour
 {
@@ -16,6 +17,10 @@ public class BaseNPC : MonoBehaviour
     [Header("判定玩家已經靠近")]
     public bool Playerisclose =false;
 
+    [Header("互動標籤")]
+    public GameObject ChooseTag; 
+
+
     private void Start()
     {
         //取得玩家部分
@@ -26,6 +31,11 @@ public class BaseNPC : MonoBehaviour
         //取得NPC部分
         NPC_Anime = GetComponent<Animator>();
         NPC_sprite = GetComponent<SpriteRenderer>();
+
+        //取得對話氣球
+        ChooseTag = transform.GetChild(0).gameObject;
+        ChooseTag.SetActive(false);
+
     }
 
     public void Update()
@@ -42,14 +52,19 @@ public class BaseNPC : MonoBehaviour
     {
         float NPC_Player_Distance = Vector2.Distance(transform.position, player.transform.position);
 
-        if (NPC_Player_Distance <= 0.35) 
+        if (NPC_Player_Distance <= 0.35)
         {
+            ChooseTag.SetActive(true);
             Playerisclose = true;
             Vector2 NPPos = transform.position - player.transform.position;
             NPC_Anime.SetFloat("PositionX", NPPos.x);
             NPC_Anime.SetFloat("PositionY", NPPos.y);
         }
-        else Playerisclose = false;
+        else
+        {
+            Playerisclose = false;
+            ChooseTag.SetActive(false);
+        }
     }
 
 
